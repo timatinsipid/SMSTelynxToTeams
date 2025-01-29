@@ -28,9 +28,9 @@ $ReqTokenBody = @{
 # Get Token
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
 $apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
-$title = $Request.Body.data.from.phone_number
-$subtitle = $convertedBody["text"]
-$text = $convertedBody["data"].text
+$title = $converted.data.payload.from.phone_number
+$subtitle = $converted.data.payload.received_at
+$text = $convertedBody.data.payload.text
 # Body to send the message
 $body = @"
 {
