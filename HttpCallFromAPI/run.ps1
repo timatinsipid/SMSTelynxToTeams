@@ -20,6 +20,8 @@ $ClientSecret =  $env:Teams_application_secret
 $Username = $env:Teams_User_id
 $Password =  $env:Teams_User_Password
 $tenant = $env:Teams_Tenant
+$teamid = $env:Teams_TeamID
+$channelid = $env:Teams_ChannelID
 # Build Token Body
 $ReqTokenBody = @{
     Grant_Type    = "Password"
@@ -33,6 +35,33 @@ $ReqTokenBody = @{
 # Get Token
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
 write-output $TokenResponse
+$apiUrl = "https://graph.microsoft.com/teams/$teamid/channels/$channelid/messages"
+$title = "test"
+$subtitle = "test"
+$text = "This is a test body"
+# Body to send the message
+$body = @"
+{
+    "subject": null,
+    "body": {
+        "contentType": "html",
+        "content": "<attachment id=\"74d20c7f34aa4a7fb74e2b30004247c5\"></attachment>"
+    },
+    "attachments": [
+        {
+            "id": "74d20c7f34aa4a7fb74e2b30004247c5",
+            "contentType": "application/vnd.microsoft.card.thumbnail",
+            "contentUrl": null,
+            "content": "{\r\n  \"title\": \"$title\",\r\n  \"subtitle\": \"$subtitle\",\r\n  \"text\": \"$text\",\r\n  \r\n}",
+            "name": null,
+            "thumbnailUrl": null
+        }
+    ]
+}
+"@
+write-output $body
+# Send Teams Message
+Invoke-RestMethod -Headers @{Authorization = "Bearer $($Tokenresponse.access_token)"} -Uri $apiUrl -Body $Body -Method Post -ContentType 'application/json'
 
 $body = "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
 
