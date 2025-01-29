@@ -35,7 +35,7 @@ $ReqTokenBody = @{
 # Get Token
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
 write-output $TokenResponse
-$apiUrl = "https://graph.microsoft.com/teams/$teamid/channels/$channelid/messages"
+$apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
 $title = "test"
 $subtitle = "test"
 $text = "This is a test body"
