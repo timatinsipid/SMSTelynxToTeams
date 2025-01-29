@@ -19,6 +19,7 @@ $clientID = $env:Teams_application_id
 $ClientSecret =  $env:Teams_application_secret
 $Username = $env:Teams_User_id
 $Password =  $env:Teams_User_Password
+$tenant = $env:Teams_Tenant
 # Build Token Body
 $ReqTokenBody = @{
     Grant_Type    = "Password"
