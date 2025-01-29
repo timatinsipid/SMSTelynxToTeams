@@ -34,7 +34,7 @@ $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tena
 $apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
 $title = $Request.Body.data.from.phone_number
 $subtitle = $Request.Body.data.subject
-$text = $Request.Body.data.text
+$text = $Request.Body.data
 # Body to send the message
 $body = @"
 {
