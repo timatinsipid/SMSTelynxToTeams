@@ -8,7 +8,6 @@ Write-Host "PowerShell HTTP trigger function processed a request."
 Write-Output $Request
 write-output $request.body
 $convertedBody = [HashTable]::New($Request.Body, [StringComparer]::OrdinalIgnoreCase)
-$data = $convertedBody | ConvertFrom-Json
 # Interact with query parameters or the body of the request.
 $name = $Request.Query.Name
 if (-not $name) {
@@ -35,8 +34,8 @@ $ReqTokenBody = @{
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
 $apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
 $title = $Request.Body.data.from.phone_number
-$subtitle = $Request.Body.data.subject
-$text = $data
+$subtitle = $convertedBody["text"]
+$text = $convertedBody["data"].text
 # Body to send the message
 $body = @"
 {
