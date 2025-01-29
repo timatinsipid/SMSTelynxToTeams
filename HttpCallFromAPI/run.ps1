@@ -11,10 +11,6 @@ $name = $Request.Query.Name
 if (-not $name) {
     $name = $Request.Body
 }
-Write-Output $env:Teams_application_id
-Write-Output $env:Teams_application_secret
-Write-Output $env:Teams_User_id
-Write-Output $env:Teams_User_Password
 $clientID = $env:Teams_application_id
 $ClientSecret =  $env:Teams_application_secret
 $Username = $env:Teams_User_id
@@ -34,7 +30,6 @@ $ReqTokenBody = @{
 
 # Get Token
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
-write-output $TokenResponse
 $apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
 $title = "test"
 $subtitle = "test"
@@ -59,7 +54,6 @@ $body = @"
     ]
 }
 "@
-write-output $body
 # Send Teams Message
 Invoke-RestMethod -Headers @{Authorization = "Bearer $($Tokenresponse.access_token)"} -Uri $apiUrl -Body $Body -Method Post -ContentType 'application/json'
 
