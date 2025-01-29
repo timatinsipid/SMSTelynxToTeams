@@ -5,14 +5,9 @@ param($Request, $TriggerMetadata)
 
 # Write to the Azure Functions log stream.
 Write-Host "PowerShell HTTP trigger function processed a request."
-Write-Output $Request
-write-output $request.body
 $convertedBody = [HashTable]::New($Request.Body, [StringComparer]::OrdinalIgnoreCase)
+write-output $convertedBody
 # Interact with query parameters or the body of the request.
-$name = $Request.Query.Name
-if (-not $name) {
-    $name = $Request.Body
-}
 $clientID = $env:Teams_application_id
 $ClientSecret =  $env:Teams_application_secret
 $Username = $env:Teams_User_id
@@ -58,13 +53,6 @@ $body = @"
 "@
 # Send Teams Message
 Invoke-RestMethod -Headers @{Authorization = "Bearer $($Tokenresponse.access_token)"} -Uri $apiUrl -Body $Body -Method Post -ContentType 'application/json'
-
-$body = "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-
-if ($name) {
-    $body = "Hello, $name. This HTTP triggered function executed successfully."
-}
-
 # Associate values to output bindings by calling 'Push-OutputBinding'.
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
     StatusCode = [HttpStatusCode]::OK
