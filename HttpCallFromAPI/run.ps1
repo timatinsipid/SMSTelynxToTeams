@@ -6,7 +6,7 @@ param($Request, $TriggerMetadata)
 # Write to the Azure Functions log stream.
 Write-Host "PowerShell HTTP trigger function processed a request."
 $convertedBody = [HashTable]::New($Request.Body, [StringComparer]::OrdinalIgnoreCase)
-write-output $convertedBody
+write-output $convertedBody.data
 # Interact with query parameters or the body of the request.
 $clientID = $env:Teams_application_id
 $ClientSecret =  $env:Teams_application_secret
