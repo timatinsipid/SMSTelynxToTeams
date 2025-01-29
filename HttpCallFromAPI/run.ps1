@@ -8,7 +8,7 @@ Write-Host "PowerShell HTTP trigger function processed a request."
 Write-Output $Request
 write-output $request.body
 $convertedBody = [HashTable]::New($Request.Body, [StringComparer]::OrdinalIgnoreCase)
-$data = $converted | ConvertFrom-Json
+$data = $convertedBody | ConvertFrom-Json
 # Interact with query parameters or the body of the request.
 $name = $Request.Query.Name
 if (-not $name) {
