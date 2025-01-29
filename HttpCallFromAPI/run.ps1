@@ -7,6 +7,7 @@ param($Request, $TriggerMetadata)
 Write-Host "PowerShell HTTP trigger function processed a request."
 $convertedBody = [HashTable]::New($Request.Body, [StringComparer]::OrdinalIgnoreCase)
 write-output $convertedBody.data.payload
+write-output $($convertedBody.data.payload | gm)
 # Interact with query parameters or the body of the request.
 $clientID = $env:Teams_application_id
 $ClientSecret =  $env:Teams_application_secret
@@ -28,7 +29,7 @@ $ReqTokenBody = @{
 # Get Token
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
 $apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
-$title = $converted.data.payload.from.phone_number
+$title = $converted.data.payload.from["phone_number"]
 $subtitle = $converted.data.payload.received_at
 $text = $convertedBody.data.payload.text
 # Body to send the message
