@@ -30,7 +30,7 @@ $ReqTokenBody = @{
 # Get Token
 $TokenResponse = Invoke-RestMethod -Uri "https://login.microsoftonline.com/$Tenant/oauth2/v2.0/token" -Method POST -Body $ReqTokenBody
 # Send a message to a channel
-#$apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
+# apiUrl = "https://graph.microsoft.com/v1.0/teams/$teamid/channels/$channelid/messages"
 # Send a message to a chat
 $apiUrl = "https://graph.microsoft.com/v1.0/chats/$chatid/messages"
 $JSON = convertfrom-json -inputobject $($convertedBody.data.payload.from)
