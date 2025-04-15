@@ -41,7 +41,7 @@ $text = $convertedBody.data.payload.text
 # Body to send the message
 $body = @"
 {
-    "subject": \"$title\",
+    "subject": "$title",
     "body": {
         "contentType": "html",
         "content": "<attachment id=\"74d20c7f34aa4a7fb74e2b30004247c5\"></attachment>"
@@ -58,6 +58,7 @@ $body = @"
     ]
 }
 "@
+Write-Output $body
 # Send Teams Message
 Invoke-RestMethod -Headers @{Authorization = "Bearer $($Tokenresponse.access_token)"} -Uri $apiUrl -Body $Body -Method Post -ContentType 'application/json'
 # Associate values to output bindings by calling 'Push-OutputBinding'.
